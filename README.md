@@ -69,6 +69,15 @@ Learning Spring Boot
   - Spring check whether it is available (as it was created during the initialization) and is connected automatically
   - Spring injects that object in our application. This is called dependency injection
 
+- Prototype Scope?
+  - Even if we dont call `context.getBeans(...)`, the object will be created. Also, if we call `context.getBeans(...)` more than once, the object will be created only once!
+  - The moment we'll start the application, Spring will give us the object
+  - This is because, by default Spring used Singleton design Pattern
+  - We can make change it to Prototype Scope by using the `@Scope(value = "prototype")` annotation on the class
+    - By doing this, Spring will not create an instance by default
+    - The moment we use `context.getBeans(...)`, the object will be created
+    - So, here we'll be getting multiple objects if `context.getBeans(...)` is called multiple times
+
 <details>
 <summary>Code!</summary>
 
@@ -76,6 +85,7 @@ Learning Spring Boot
 
 ```java
 @Component
+@Scope(value = "prototype")
 public class Alien {
   private int aid;
   private String aname;

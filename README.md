@@ -44,3 +44,52 @@ Learning Spring Boot
 - We can do this by using some external service who'll inject the dependency
 - Spring has: Dependency Injection Containers. They creates the objects for us and then injects in our class
 - We can annotate the dependency clases with `@Component` which makes them a component of the spring framework. And then use them in our class using `@Autowire`
+
+# Implementation
+
+## Autowire and Injecting Dependency
+
+- Over the JVM, Spring gives a container: Spring Container
+- This container will have objects these are called Spring Beans
+- We've 2 scopes available in Spring
+
+  - Singleton Scope
+  - Prototype Scope
+
+- The Spring container gets created on: `SpringApplication.run(FirstprojectApplication.class, args);`
+
+  - It returns the context
+  - The contianer is initialized here
+  - Here it'll try to create all the objects
+
+- Anotating a class with `@Component` tells the Spring Framework that we need the object of that class. The object will be created when the container is initialized
+- Whenever we use the `context.getBean(Alien.class)`
+
+  - It means that we need a Spring Bean of `Alien` type.
+  - Spring check whether it is available (as it was created during the initialization) and is connected automatically
+  - Spring injects that object in our application. This is called dependency injection
+
+<details>
+<summary>Code!</summary>
+
+- Create a class (the dependency)
+
+```java
+@Component
+public class Alien {
+  private int aid;
+  private String aname;
+  private String tech;
+
+  // ... getters and setters
+}
+```
+
+- Use it in the main method using:
+
+```java
+ConfigurableApplicationContext context = SpringApplication.run(FirstprojectApplication.class, args);
+Alien a = context.getBean(Alien.class);
+```
+
+</details>

@@ -2,14 +2,17 @@ package com.kinjal.firstproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class FirstprojectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FirstprojectApplication.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(FirstprojectApplication.class, args);
 
-		System.out.println("Welcome to Spring Boot...");
+		Alien a = context.getBean(Alien.class);
+
+		a.show();
 	}
 
 }

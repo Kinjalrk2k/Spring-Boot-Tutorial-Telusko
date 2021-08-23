@@ -132,3 +132,30 @@ Alien a = context.getBean(Alien.class);
 </details>
 
 # Creating a Web Application
+
+## Workflow
+
+- We can create any jsp pages provided it's under the `webapp` folder
+- Next we need a controller
+- Next we need a server!
+
+## Controller
+
+- It is a class in out main application
+- A controller accepts our HTTP request
+- Use `@Controller` annotation over the class
+- A method inside this class should take up the request. Use `@RequestMapping("home")` annotation over the method to accept the "home" request
+- Respone the request (`return something`)
+  - If we use `@ResponseBody` annotation, it will send the response as a string [`res.send`]
+  - Spring Boot doesn't support JSP by default. We neeed to add the support for it
+    - Goto [MVNRepository](https://mvnrepository.com/)
+    - Search for [Tomcat Jasper](https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jasper)
+    - Pick up the version that matches with the embedded Tomcat installed in the project
+    - Copy the Maven depencency code and paste it in the _`pom.xml`_ file inside `<dependencies>`
+    - We just need to return the name of the page as string: `return "home.jsp";`. Spring boot knows where to search for the file (`webapp` directory)
+
+## Server
+
+- We need a server to run our project. But, we don't have a server
+- But, we've an embedded Tomcat server in our Maven dependencies
+- Starting the project, starts the internal Tomcat server

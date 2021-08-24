@@ -266,3 +266,38 @@ public String home(HttpServletRequest req) {
 </details>
 
 > Spring uses `RequestDispatcher` to call the JSP pages
+
+## Using MVC Structure
+
+- Instead of fetching the query params from the `HttpServletRequest`, we can directly get it in the Contoller function
+
+```java
+@RequestMapping("home")
+public String home(@RequestParam("name") String myName, HttpSession session) {
+  System.out.println("Hello, " + myName);
+  session.setAttribute("name", myName);
+
+  return "home";
+}
+```
+
+- The `@RequestParam("name")` annotation tells that the query parameter that comes from the client is `name`, but it is mapped to the local variable `myName`
+- `HttpSession` is automatically attached by Spring using Dependency Injection
+
+### Using `ModelAndView`
+
+- `ModelAndView` can be used to replace the `HttpSession`
+
+```java
+@RequestMapping("home")
+public ModelAndView home(@RequestParam("name") String myName) {
+  ModelAndView mv = new ModelAndView();
+  mv.addObject("name", myName);
+  mv.setViewName("home");
+
+  return mv;
+}
+```
+
+- We can set objects (data) and the view directly in the `ModelAndView` and return the same
+- It is cleaner code!

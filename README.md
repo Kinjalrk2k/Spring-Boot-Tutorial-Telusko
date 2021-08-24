@@ -138,6 +138,7 @@ Alien a = context.getBean(Alien.class);
 - We can create any jsp pages provided it's under the `webapp` folder
 - Next we need a controller
 - Next we need a server!
+- Change properties?
 
 ## Controller
 
@@ -159,3 +160,17 @@ Alien a = context.getBean(Alien.class);
 - We need a server to run our project. But, we don't have a server
 - But, we've an embedded Tomcat server in our Maven dependencies
 - Starting the project, starts the internal Tomcat server
+
+## `applications.properties`
+
+- By default Spring boot creates auto configuration. If we want some manual configuration, her's where we do that
+- Path: _`src/main/resources/application.properties`_
+
+```.properties
+spring.mvc.view.prefix=/pages/
+spring.mvc.view.suffix=.jsp
+```
+
+- The above properties tells spring boot that:
+  - Our views are in a directory `/pages/` (inside `webapp` directory -> `/webapp/pages/`)
+  - Our view files are of `.jsp` extension

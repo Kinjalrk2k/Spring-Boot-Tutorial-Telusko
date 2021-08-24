@@ -131,7 +131,7 @@ Alien a = context.getBean(Alien.class);
 
 </details>
 
-# Creating a Web Application
+# Web Application
 
 ## Workflow
 
@@ -155,6 +155,19 @@ Alien a = context.getBean(Alien.class);
     - Copy the Maven depencency code and paste it in the _`pom.xml`_ file inside `<dependencies>`
     - We just need to return the name of the page as string: `return "home.jsp";`. Spring boot knows where to search for the file (`webapp` directory)
 
+<details>
+<summary>Code!</summary>
+
+```java
+@RequestMapping("home")
+public String home() {
+  System.out.println("Hello");
+  return "home.jsp";
+}
+```
+
+</details>
+
 ## Server
 
 - We need a server to run our project. But, we don't have a server
@@ -174,3 +187,82 @@ spring.mvc.view.suffix=.jsp
 - The above properties tells spring boot that:
   - Our views are in a directory `/pages/` (inside `webapp` directory -> `/webapp/pages/`)
   - Our view files are of `.jsp` extension
+
+## Handling Client data
+
+### Receiving Query Parameters
+
+- Data passed in the query parameters like: `/home?name=Kinjal`
+- To get the request data, e need to use the `HttpServletRequest` object that is passed in our controller function
+
+<details>
+<summary>Code!</summary>
+
+```java
+@RequestMapping("home")
+public String home(HttpServletRequest req) {
+  String name = req.getParameter("name");
+  System.out.println("Hello, " + name);
+  return "home";
+}
+```
+
+</details>
+
+### Message Passing to JSP
+
+- We need to send back dynamic data from our controller to the JSP page
+- For that we need to set the data in a Session object
+
+```java
+HttpSession session = req.getSession();
+session.setAttribute("name", name);
+```
+
+- `session.setAttribute` takes key folled by value
+- In the JSP page, we can use the session values using JSP EL (Expression Language) format.
+
+```jsp
+<body>
+  Welcome, ${name}
+</body>
+```
+
+<details>
+<summary>Code!</summary>
+- Controller:
+
+```java
+@RequestMapping("home")
+public String home(HttpServletRequest req) {
+  String name = req.getParameter("name");
+  System.out.println("Hello, " + name);
+
+  HttpSession session = req.getSession();
+  session.setAttribute("name", name);
+
+  return "home";
+}
+```
+
+- JSP
+
+```jsp
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+  </head>
+  <body>
+    Welcome, ${name}
+  </body>
+</html>
+
+```
+
+</details>
+
+> Spring uses `RequestDispatcher` to call the JSP pages

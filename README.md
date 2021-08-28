@@ -438,6 +438,21 @@ public class AlienController {
 
 </details>
 
+### Fetching Data
+
+```java
+Alien alien = repo.findById(aid).orElse(new Alien());
+```
+
+- `.findById` can be used to find a data with the primary key
+- `.orElse` ensures that if the data couldn't be found by `.findById`, something else is returned
+  - `new Aline()` creates a blank object and returns it
+
+### Service Layer
+
+- In a controller, we're not always sure that the data is coming from the database. Sometimes it comes from network or input from user
+- In case the data is coming from the repository, the service layer will interact with it
+
 ## Folder Structrure
 
 <!-- more later! -->

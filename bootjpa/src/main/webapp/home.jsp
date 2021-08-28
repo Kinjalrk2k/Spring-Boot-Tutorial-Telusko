@@ -16,5 +16,14 @@
 
       <input type="submit" /><br />
     </form>
+
+    <hr />
+
+    <form action="getAlien">
+      <label for="aid">Alien ID</label>
+      <input type="text" name="aid" /><br />
+
+      <input type="submit" /><br />
+    </form>
   </body>
 </html>

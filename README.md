@@ -230,6 +230,7 @@ session.setAttribute("name", name);
 
 <details>
 <summary>Code!</summary>
+
 - Controller:
 
 ```java
@@ -301,3 +302,26 @@ public ModelAndView home(@RequestParam("name") String myName) {
 
 - We can set objects (data) and the view directly in the `ModelAndView` and return the same
 - It is cleaner code!
+
+### Using Model Object
+
+- When we want to send multiple parameters or when we need to send an object, we'll use this
+- Also we can accept a request in a serialized form of an object
+
+```java
+@Controller
+public class HomeController {
+
+  @RequestMapping("home")
+  public ModelAndView home(Alien alien) {
+    ModelAndView mv = new ModelAndView();
+    mv.addObject("obj", alien);
+    mv.setViewName("home");
+
+    return mv;
+  }
+}
+```
+
+- The `alien` object is automatically created from the request parameters and can be used in our controller. The `Alien` class should have variable names same as the parameters passed in the request
+- Similarly, we can send an object directly to the JSP using `mv.addObject`

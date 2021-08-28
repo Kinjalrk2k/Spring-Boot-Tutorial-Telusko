@@ -325,3 +325,119 @@ public class HomeController {
 
 - The `alien` object is automatically created from the request parameters and can be used in our controller. The `Alien` class should have variable names same as the parameters passed in the request
 - Similarly, we can send an object directly to the JSP using `mv.addObject`
+
+<details>
+<summary>Code</summary>
+
+- _`model/Alien.java`_
+
+```java
+package com.kinjal.bootjpa.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Alien {
+
+  @Id
+  private int aid;
+  private String aname;
+
+  // getters, setters and toString
+}
+
+```
+
+</details>
+
+## Database
+
+### Setting up H2 Database
+
+- H2 is a in-memory database
+- Spring Boot will do the auto-configuration
+- In _`application.properties`_:
+
+```properties
+spring.h2.console.enabled=true
+spring.sql.init.platform=h2
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.jpa.defer-datasource-initialization=true
+```
+
+- After running the Spring Boot Application, go to: `http://localhost:8080/h2-console` to access the console
+
+### Generate tables
+
+- We've to configure JPA for that
+- Annotate the class (model class) with `@Entity` and a class variable (which acts like an ID) with `@Id`
+- Spring boot will create a table for us
+- If you want to add seed data, write the SQL INSERT Queries in a `data.sql` file in the _`resources`_ directory
+
+### Inserting Data
+
+- We need to insert data in the database from a request
+- We need to create a repository for that. It is an interface which extends `CrudRepository`
+  - Which extending the generic `CrudRepository` we just need to specify out model and the datatype of the primary key
+- Next we need to autowire this interface in our controller
+
+> Note: We didn't implement our repository interface, Sping does that for us. Spring Boot instantiate it and will look for the repository object.
+
+- In our request method, we just need to do `repo.save(alien);` to insert the data in the database (`alien` is the object)
+
+<details>
+<summary>Code</summary>
+
+- _`dao/AlienRepo.java`_
+
+```java
+package com.kinjal.bootjpa.dao;
+
+import com.kinjal.bootjpa.model.Alien;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface AlienRepo extends CrudRepository<Alien, Integer> {
+
+}
+
+```
+
+- _`controller/AlienController.java`_
+
+```java
+package com.kinjal.bootjpa.controller;
+
+import com.kinjal.bootjpa.dao.AlienRepo;
+import com.kinjal.bootjpa.model.Alien;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class AlienController {
+
+  @Autowired
+  AlienRepo repo;
+
+  @RequestMapping("/")
+  public String home() {
+    return "home.jsp";
+  }
+
+  @RequestMapping("/addAlien")
+  public String addAlien(Alien alien) {
+    repo.save(alien);
+    return "home.jsp";
+  }
+}
+
+```
+
+</details>
+
+## Folder Structrure
+
+<!-- more later! -->

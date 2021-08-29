@@ -491,6 +491,31 @@ List<Alien> findByTechSorted(String tech);
 - We do not need to write `SELECT *` as its a part of the boilerplate code
 - Parameters are passed as: `?1`, the number denotes the positions of the parameters passed in the query, as there can be multiple parameters passed to it using the method
 
-## Folder Structrure
+# REST
 
-<!-- more later! -->
+#### Basic
+
+```java
+@RequestMapping("/aliens")
+  @ResponseBody
+  public String getAliens() {
+    return repo.findAll().toString();
+  }
+```
+
+- The `repo.findAll` returns an iterable, but we need a String (JSON is a string right?), so we need to convert it into a `String` using the `.toString()` method.
+- By default Spring expects a view name to be returned as a String, but in RESTful services, we'll return data. `@ResponseBody` annotation is used to specify the response dispatcher that we're returning a data
+- This returns just a string, not in a JSSON format :"(
+
+#### Path params
+
+```java
+@RequestMapping("/alien/{aid}")
+@ResponseBody
+public String getAlien(@PathVariable int aid) {
+  return repo.findById(aid).toString();
+}
+```
+
+- Use the wildcard with `{...}`
+- Use the `@PathVariable` annotation

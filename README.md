@@ -453,6 +453,44 @@ Alien alien = repo.findById(aid).orElse(new Alien());
 - In a controller, we're not always sure that the data is coming from the database. Sometimes it comes from network or input from user
 - In case the data is coming from the repository, the service layer will interact with it
 
+### Complex Queries
+
+- We can declare our own queries in our repository instance
+- Like if we want to query by `tech`, we'll use:
+
+```java
+List<Alien> findByTech(String tech);
+```
+
+- We need to name our methods as:
+  - staring with `findBy....` or `getBy...`
+  - and ending with the property name
+  - for Spring to automatically create such queries for us
+- Structure:
+
+```
+findBy<property><relation>
+getBy<property><relation>
+```
+
+- Examples:
+  - `findByTech`
+  - `findByAidGreaterThan`
+
+#### Defining my own query
+
+- We can define our own query using the `@Query` annotation
+
+```java
+@Query("from Alien where tech=?1 order by aname")
+List<Alien> findByTechSorted(String tech);
+```
+
+- In the above example, the method `findByTechSorted` will return the result of the query
+- The query is in based on JPQL (Java Persistence Query Language) which is in turn based on HQL (Hibernate Query Language)
+- We do not need to write `SELECT *` as its a part of the boilerplate code
+- Parameters are passed as: `?1`, the number denotes the positions of the parameters passed in the query, as there can be multiple parameters passed to it using the method
+
 ## Folder Structrure
 
 <!-- more later! -->

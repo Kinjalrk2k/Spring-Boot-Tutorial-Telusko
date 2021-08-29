@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <h1>Add Alien</h1>
     <form action="addAlien">
       <label for="aid">Alien ID</label>
       <input type="text" name="aid" /><br />
@@ -19,6 +20,7 @@
 
     <hr />
 
+    <h1>Find Alien</h1>
     <form action="getAlien">
       <label for="aid">Alien ID</label>
       <input type="text" name="aid" /><br />

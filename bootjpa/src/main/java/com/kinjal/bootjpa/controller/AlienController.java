@@ -33,6 +33,10 @@ public class AlienController {
     Alien alien = repo.findById(aid).orElse(new Alien());
     mv.addObject("alien", alien);
 
+    System.out.println(repo.findByTech("Java"));
+    System.out.println(repo.findByAidGreaterThan(102));
+    System.out.println(repo.findByTechSorted("Java"));
+
     return mv;
   }
 }

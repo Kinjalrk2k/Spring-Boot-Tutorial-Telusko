@@ -1,5 +1,8 @@
 package com.kinjal.bootjpa.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.websocket.server.PathParam;
 
 import com.kinjal.bootjpa.dao.AlienRepo;
@@ -50,13 +53,13 @@ public class AlienController {
 
   @RequestMapping("/aliens")
   @ResponseBody
-  public String getAliens() {
-    return repo.findAll().toString();
+  public List<Alien> getAliens() {
+    return repo.findAll();
   }
 
   @RequestMapping("/alien/{aid}")
   @ResponseBody
-  public String getAlien(@PathVariable int aid) {
-    return repo.findById(aid).toString();
+  public Optional<Alien> getAlien(@PathVariable int aid) {
+    return repo.findById(aid);
   }
 }

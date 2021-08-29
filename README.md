@@ -519,3 +519,26 @@ public String getAlien(@PathVariable int aid) {
 
 - Use the wildcard with `{...}`
 - Use the `@PathVariable` annotation
+
+#### Need JSON?
+
+- We'll need to use `JpaRepository` instead of `CrudRepository`
+- This is because `JpaRepository`'s find methods returns `List` (`CrudRepository` returns `Iterable`)
+- We needn't use `.toString` in our find methods anymore and set the return of the view function accordingly
+- Spring will automatically return JSON data
+
+```java
+@RequestMapping("/aliens")
+@ResponseBody
+public List<Alien> getAliens() {
+  return repo.findAll();
+}
+
+@RequestMapping("/alien/{aid}")
+@ResponseBody
+public Optional<Alien> getAlien(@PathVariable int aid) {
+  return repo.findById(aid);
+}
+```
+
+> `Optional` is a Generic, which can hols the type of data passes or `null`. When used with `JpaRepository`, `null` is returned when an object is not found in the database

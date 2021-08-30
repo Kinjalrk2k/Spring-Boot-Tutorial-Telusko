@@ -493,7 +493,7 @@ List<Alien> findByTechSorted(String tech);
 
 # REST
 
-#### Basic
+### Basic
 
 ```java
 @RequestMapping("/aliens")
@@ -507,7 +507,7 @@ List<Alien> findByTechSorted(String tech);
 - By default Spring expects a view name to be returned as a String, but in RESTful services, we'll return data. `@ResponseBody` annotation is used to specify the response dispatcher that we're returning a data
 - This returns just a string, not in a JSSON format :"(
 
-#### Path params
+### Path params
 
 ```java
 @RequestMapping("/alien/{aid}")
@@ -520,7 +520,7 @@ public String getAlien(@PathVariable int aid) {
 - Use the wildcard with `{...}`
 - Use the `@PathVariable` annotation
 
-#### Need JSON?
+### Need JSON?
 
 - We'll need to use `JpaRepository` instead of `CrudRepository`
 - This is because `JpaRepository`'s find methods returns `List` (`CrudRepository` returns `Iterable`)
@@ -542,3 +542,16 @@ public Optional<Alien> getAlien(@PathVariable int aid) {
 ```
 
 > `Optional` is a Generic, which can hols the type of data passes or `null`. When used with `JpaRepository`, `null` is returned when an object is not found in the database
+
+### Content Negotiation
+
+- Data can be received by a client in various formats. By default it's JSON, but we might also need to send data in XML format
+- From the client side, we can set this using the `Accept` header
+  - `application/json`
+  - `application/xml`
+- To get XML response, just install the dependency: [Jackson Dataformat XML](https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml)
+- To restrict a route to use a single type of content:
+
+```java
+@RequestMapping(path = "/aliens", produces = { "application/xml" })
+```

@@ -341,6 +341,7 @@ import javax.persistence.Id;
 public class Alien {
 
   @Id
+  // @GeneratedValue -> auto generated incremened value
   private int aid;
   private String aname;
 
@@ -602,3 +603,11 @@ public Alien saveOrUpdateAlien(@RequestBody Alien alien) {
 
 - Refractoring RESTful Applications in Spring!
 - We no more need the Controller. Our Repository can handle all the requests
+
+```java
+@RepositoryRestResource(collectionResourceRel = "aliens", path = "aliens")
+public interface AlienRepo extends JpaRepository<Alien, Integer> {
+
+}
+
+```

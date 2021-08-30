@@ -597,3 +597,8 @@ public Alien saveOrUpdateAlien(@RequestBody Alien alien) {
   return alien;
 }
 ```
+
+## Spring Data REST
+
+- Refractoring RESTful Applications in Spring!
+- We no more need the Controller. Our Repository can handle all the requests

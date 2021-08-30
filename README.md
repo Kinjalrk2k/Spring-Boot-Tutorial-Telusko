@@ -573,3 +573,27 @@ public Alien addAlien(@RequestBody Alien alien) {
 ```
 
 - Remeber to use `@RequestBody` annotation to receive a JSON data
+
+### DELETE Request
+
+```java
+@DeleteMapping("/alien/{aid}")
+public String deleteAlien(@PathVariable int aid) {
+  Alien toDelete = repo.getById(aid);
+  repo.delete(toDelete);
+
+  return "Deleted";
+}
+```
+
+### PUT Request
+
+- If the data is present, then update or else create a new data
+
+```java
+@PutMapping("/alien")
+public Alien saveOrUpdateAlien(@RequestBody Alien alien) {
+  repo.save(alien);
+  return alien;
+}
+```

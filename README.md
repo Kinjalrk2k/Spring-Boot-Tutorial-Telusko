@@ -555,3 +555,21 @@ public Optional<Alien> getAlien(@PathVariable int aid) {
 ```java
 @RequestMapping(path = "/aliens", produces = { "application/xml" })
 ```
+
+> When data is send from client to server, it is `consumes`. The other way round is `produces`
+
+### POST Request
+
+- Use the `@PostMapping` annotation, instead of `@RequestMapping`
+
+> We need to use `@ResponseBody` with each route. Instead we can use `@RestController` instead of `@Controller`
+
+```java
+@PostMapping("/alien")
+public Alien addAlien(@RequestBody Alien alien) {
+  repo.save(alien);
+  return alien;
+}
+```
+
+- Remeber to use `@RequestBody` annotation to receive a JSON data
